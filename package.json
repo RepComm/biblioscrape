@@ -1,11 +1,12 @@
 {
-  "name": "ts-map-babel-template",
+  "name": "biblioscrape",
+  "type": "module",
   "version": "1.0.0",
-  "description": "TypeScript, ES Modules, import map, import map polyfill, and babel",
-  "main": "index.js",
+  "description": "Scrape bibles from various sources and push to pocketbase",
+  "main": "./index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RepComm/ts-map-babel-template.git"
+    "url": "git+https://github.com/RepComm/biblioscrape.git"
   },
   "keywords": [
     "typescript",
@@ -16,9 +17,9 @@
   "author": "Jonathan Crowder",
   "license": "Unlicense",
   "bugs": {
-    "url": "https://github.com/RepComm/ts-map-babel-template/issues"
+    "url": "https://github.com/RepComm/biblioscrape/issues"
   },
-  "homepage": "https://github.com/RepComm/ts-map-babel-template#readme",
+  "homepage": "https://github.com/RepComm/biblioscrape#readme",
   "devDependencies": {
     "@babel/cli": "^7.13.16",
     "@babel/core": "^7.14.0",
@@ -32,6 +33,8 @@
     "publish": "npm publish --access public"
   },
   "dependencies": {
-    "@roguecircuitry/htmless": "https://github.com/RogueCircuitry/htmless"
+    "@types/node": "^18.11.18",
+    "node-html-parser": "^6.1.4",
+    "sqlite3": "^5.1.4"
   }
 }
