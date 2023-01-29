@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 import { parse } from "node-html-parser";
+import { MySwordBible } from "./mysword.js";
 export class Verse {
   constructor(id) {
     this.id = id;
@@ -13,7 +14,7 @@ export class Verse {
     for (let text of this.texts) {
       results.push(text);
     }
-    return `Verse: ${this.id}\n${results.join(" ")}\n`;
+    return `${results.join(" ")}\n`;
   }
 }
 export class Chapter {
@@ -68,7 +69,7 @@ export class Book {
     return `Book: ${this.id}\n${results.join(" ")}`;
   }
 }
-function esv_org() {
+async function esv_org() {
   let raw = readFileSync("./sample-content/Matthew 1 _ ESV.org.html", {
     encoding: "utf-8"
   });
@@ -99,15 +100,27 @@ function esv_org() {
             }
           }
         }
-        book.getChapter(chapterText).getVerse(verseNumText).append(verseNode.textContent.trim());
+        let [chapterName, chapterNumber] = chapterText.split(" ");
+        console.log(chapterName, chapterNumber);
+        book.getChapter(chapterNumber).getVerse(verseNumText).append(verseNode.textContent.trim());
 
         // console.log(chapterText, verseNumText, `"${verseNode.textContent}"`);
       }
     }
   }
 
-  console.log(book.toString());
+  let myswordModule = new MySwordBible("ESV");
+  await myswordModule.create();
+  for (let [chapterId, chapter] of book.chapters) {
+    for (let [verseId, verse] of chapter.verses) {
+      myswordModule.verse(bookName, chapterId, verseId, verse.toString());
+    }
+  }
+  myswordModule.close();
+
+  // console.log(book.toString());
 }
+
 async function main() {
   esv_org();
 }
